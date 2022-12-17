@@ -1,26 +1,31 @@
 package com.tcs.developmentbooks4.service;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import com.tcs.developmentbooks4.enums.BooksEnum;
+import com.tcs.developmentbooks4.model.Books;
 
 class BookServiceTest {
 
 	@Test
 	public void getAllBooksShouldReturnFiveBookNames() {
 		BookService service = new BookService();
-		List<String> books = service.getAllBooks();
+		List<Books> books = service.getAllBooks();
 		assertEquals(5, books.size());
-		assertTrue(books.containsAll(getAllBooks()));
 	}
-
-	private List<String> getAllBooks() {
-		return Arrays.asList("Clean Code", "The Clean Coder", "Clean Architecture",
-				"Test Driven Development by Example", "Working Effectively With Legacy Code");
+	
+	@Test
+	public void getAllBooksShouldReturnBooksWithDetails() {
+		BookService service = new BookService();
+		List<Books> result = service.getAllBooks();
+		assertEquals(BooksEnum.CLEAN_CODE.getTitle(), result.get(0).getTitle());
+		assertEquals(BooksEnum.CLEAN_CODE.getAuthor(), result.get(0).getAuthor());
+		assertEquals(BooksEnum.CLEAN_CODE.getId(), result.get(0).getId());
+		assertEquals(BooksEnum.CLEAN_CODE.getPrice(), result.get(0).getPrice(), 0.0);
+		assertEquals(BooksEnum.CLEAN_CODE.getYear(), result.get(0).getYear());
 	}
-
 }
