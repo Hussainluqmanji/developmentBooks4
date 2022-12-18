@@ -28,6 +28,8 @@ public class BookService {
 		double discount = 0;
 		if (totalBooks == 2 && typesOfBook == 2) {
 			discount = 5;
+		} else if (totalBooks == 3 && typesOfBook == 3) {
+			discount = 10;
 		}
 		double finalPrice = actualCost - (actualCost * (discount / 100));
 		return createPriceSummary(totalBooks, finalPrice);
