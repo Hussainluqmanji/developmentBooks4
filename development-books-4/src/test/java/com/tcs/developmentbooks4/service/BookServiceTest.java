@@ -37,9 +37,9 @@ class BookServiceTest {
 	}
 
 	@Test
-	public void buyBookShouldReturnSuccessMessage() {
-		String result = service.buyBook(new BookRequest(1, 1));
-		assertEquals("Book bought..", result);
+	public void buyBookShouldReturnPriceOfBook() {
+		double result = service.buyBook(new BookRequest(1, 1));
+		assertEquals(50.0, result);
 	}
 
 }
