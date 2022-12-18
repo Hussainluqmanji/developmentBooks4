@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.tcs.developmentbooks4.model.BookRequest;
 import com.tcs.developmentbooks4.model.Books;
+import com.tcs.developmentbooks4.model.PriceSummary;
 import com.tcs.developmentbooks4.service.BookService;
 
 class DevelopmentBooksControllerTest {
@@ -36,10 +37,10 @@ class DevelopmentBooksControllerTest {
 
 	@Test
 	public void buyBooksShouldReturnPriceOfBooks() {
-        List<BookRequest> books = new ArrayList<BookRequest>();
-        books.add(new BookRequest(1, 2));
-        double result = controller.buyBooks(books);
-		assertEquals(100.0, result);
+		List<BookRequest> books = new ArrayList<BookRequest>();
+		books.add(new BookRequest(1, 2));
+		PriceSummary result = controller.buyBooks(books);
+		assertEquals(100.0, result.getFinalPrice());
 	}
 
 }

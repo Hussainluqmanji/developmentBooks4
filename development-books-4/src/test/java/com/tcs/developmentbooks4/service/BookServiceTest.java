@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import com.tcs.developmentbooks4.enums.BooksEnum;
 import com.tcs.developmentbooks4.model.BookRequest;
 import com.tcs.developmentbooks4.model.Books;
+import com.tcs.developmentbooks4.model.PriceSummary;
 
 class BookServiceTest {
 
@@ -39,19 +40,19 @@ class BookServiceTest {
 
 	@Test
 	public void buyBooksShouldReturnPriceOfBooks() {
-        List<BookRequest> books = new ArrayList<BookRequest>();
-        books.add(new BookRequest(1, 2));
-        double result = service.calulateBooksPriceWithDiscount(books);
-        assertEquals(100.0, result, 0.0);
+		List<BookRequest> books = new ArrayList<BookRequest>();
+		books.add(new BookRequest(1, 2));
+		PriceSummary result = service.calulateBooksPriceWithDiscount(books);
+		assertEquals(100.0, result.getFinalPrice());
 	}
-	
-    @Test
-    public void buyBooksShouldReturnFivePercentDiscountedPriceForTwoDiffBooks() {
-        List<BookRequest> books = new ArrayList<BookRequest>();
-        books.add(new BookRequest(1, 1));
-        books.add(new BookRequest(2, 1));
-        double result = service.calulateBooksPriceWithDiscount(books);
-        assertEquals(95.0, result, 0.0);
-    }
+
+	@Test
+	public void buyBooksShouldReturnFivePercentDiscountedPriceForTwoDiffBooks() {
+		List<BookRequest> books = new ArrayList<BookRequest>();
+		books.add(new BookRequest(1, 1));
+		books.add(new BookRequest(2, 1));
+		PriceSummary result = service.calulateBooksPriceWithDiscount(books);
+		assertEquals(95.0, result.getFinalPrice());
+	}
 
 }

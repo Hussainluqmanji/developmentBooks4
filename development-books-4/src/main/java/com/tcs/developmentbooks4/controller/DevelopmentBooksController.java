@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tcs.developmentbooks4.model.BookRequest;
 import com.tcs.developmentbooks4.model.Books;
+import com.tcs.developmentbooks4.model.PriceSummary;
 import com.tcs.developmentbooks4.service.BookService;
 
 @RestController
@@ -24,7 +25,7 @@ public class DevelopmentBooksController {
 	}
 
 	@PostMapping("/buyBooks")
-	public double buyBooks(@RequestBody List<BookRequest> booksRequest) {
+	public PriceSummary buyBooks(@RequestBody List<BookRequest> booksRequest) {
 		return service.calulateBooksPriceWithDiscount(booksRequest);
 	}
 }
