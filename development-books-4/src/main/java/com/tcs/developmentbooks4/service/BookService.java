@@ -34,9 +34,7 @@ public class BookService {
 		for (int i = 0; i < noOfGroups; i++) {
 			int typesOfBookLeft = (int) books.stream().filter(book -> book.getQuantity() > 0).count();
 			bookGroups.add(typesOfBookLeft);
-			books.forEach(book -> {
-				book.setQuantity(book.getQuantity() - 1);
-			});
+			reduceQuantityOfAlreadyBookIntoGroups(books);
 		}
 
 		finalPrice = bookGroups.stream().mapToDouble(group -> calculateDiscountByNoOfTypesOfBooks(group)).sum();
@@ -77,5 +75,11 @@ public class BookService {
 		priceSummary.setTotalBooks(booksInput.getQuantity());
 		priceSummary.setTotalDiscount(0);
 		return priceSummary;
+	}
+
+	public void reduceQuantityOfAlreadyBookIntoGroups(List<BookRequest> books) {
+		books.forEach(book -> {
+			book.setQuantity(book.getQuantity() - 1);
+		});
 	}
 }
