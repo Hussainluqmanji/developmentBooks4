@@ -23,8 +23,8 @@ public class DevelopmentBooksController {
 		return service.getAllBooks();
 	}
 
-	@PostMapping("/buyBook")
-	public double buyBook(@RequestBody BookRequest bookRequest) {
-		return service.buyBook(bookRequest);
+	@PostMapping("/buyBooks")
+	public double buyBooks(@RequestBody List<BookRequest> booksRequest) {
+		return service.buyBooks(booksRequest);
 	}
 }
