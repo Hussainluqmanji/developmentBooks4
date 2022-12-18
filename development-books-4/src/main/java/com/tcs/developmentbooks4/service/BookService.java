@@ -1,5 +1,6 @@
 package com.tcs.developmentbooks4.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +26,21 @@ public class BookService {
 		if (books.size() == 1)
 			return createPriceSummaryForOnlyOneBookType(books.get(0));
 		int totalBooks = books.stream().mapToInt(book -> book.getQuantity()).sum();
-		int typesOfBook = books.size();
-		return createPriceSummary(totalBooks, calculateDiscountByNoOfTypesOfBooks(totalBooks, typesOfBook));
+		List<Integer> bookGroups = new ArrayList<Integer>();
+
+		int noOfGroups = 1 + (totalBooks / books.size());
+		double finalPrice = 0;
+
+		for (int i = 0; i < noOfGroups; i++) {
+			int typesOfBookLeft = (int) books.stream().filter(book -> book.getQuantity() > 0).count();
+			bookGroups.add(typesOfBookLeft);
+			books.forEach(book -> {
+				book.setQuantity(book.getQuantity() - 1);
+			});
+		}
+
+		finalPrice = bookGroups.stream().mapToDouble(group -> calculateDiscountByNoOfTypesOfBooks(group)).sum();
+		return createPriceSummary(totalBooks, finalPrice);
 	}
 
 	public PriceSummary createPriceSummary(int totalBooks, double finalPrice) {
@@ -38,30 +52,30 @@ public class BookService {
 		return priceSummary;
 	}
 
-	public double calculateDiscountByNoOfTypesOfBooks(int totalBooks, int typesOfBook) {
+	public double calculateDiscountByNoOfTypesOfBooks(int groupSize) {
 		double discountedPrice = 0;
-		double actualCost = totalBooks * SINGLE_BOOK_PRICE;
-		if (totalBooks == 1 && typesOfBook == 1)
+		double actualCost = groupSize * SINGLE_BOOK_PRICE;
+		if (groupSize == 1)
 			discountedPrice = 50;
-		else if (totalBooks == 2 && typesOfBook == 2)
+		else if (groupSize == 2)
 			discountedPrice = actualCost - (actualCost * (5.0 / 100));
-		else if (totalBooks == 3 && typesOfBook == 3)
+		else if (groupSize == 3)
 			discountedPrice = actualCost - (actualCost * (10.0 / 100));
-		else if (totalBooks == 4 && typesOfBook == 4)
+		else if (groupSize == 4)
 			discountedPrice = actualCost - (actualCost * (20.0 / 100));
-		else if (totalBooks == 5 && typesOfBook == 5)
+		else if (groupSize == 5)
 			discountedPrice = actualCost - (actualCost * (25.0 / 100));
 		else
 			discountedPrice = actualCost;
 		return discountedPrice;
 	}
-	
-    public PriceSummary createPriceSummaryForOnlyOneBookType(BookRequest booksInput) {
-        PriceSummary priceSummary = new PriceSummary();
-        priceSummary.setActualPrice(50 * booksInput.getQuantity());
-        priceSummary.setFinalPrice(50 * booksInput.getQuantity());
-        priceSummary.setTotalBooks(booksInput.getQuantity());
-        priceSummary.setTotalDiscount(0);
-        return priceSummary;
-    }
+
+	public PriceSummary createPriceSummaryForOnlyOneBookType(BookRequest booksInput) {
+		PriceSummary priceSummary = new PriceSummary();
+		priceSummary.setActualPrice(50 * booksInput.getQuantity());
+		priceSummary.setFinalPrice(50 * booksInput.getQuantity());
+		priceSummary.setTotalBooks(booksInput.getQuantity());
+		priceSummary.setTotalDiscount(0);
+		return priceSummary;
+	}
 }
