@@ -41,8 +41,17 @@ class BookServiceTest {
 	public void buyBooksShouldReturnPriceOfBooks() {
         List<BookRequest> books = new ArrayList<BookRequest>();
         books.add(new BookRequest(1, 2));
-        double result = service.buyBooks(books);
+        double result = service.calulateBooksPriceWithDiscount(books);
         assertEquals(100.0, result, 0.0);
 	}
+	
+    @Test
+    public void buyBooksShouldReturnFivePercentDiscountedPriceForTwoDiffBooks() {
+        List<BookRequest> books = new ArrayList<BookRequest>();
+        books.add(new BookRequest(1, 1));
+        books.add(new BookRequest(2, 1));
+        double result = service.calulateBooksPriceWithDiscount(books);
+        assertEquals(95.0, result, 0.0);
+    }
 
 }
