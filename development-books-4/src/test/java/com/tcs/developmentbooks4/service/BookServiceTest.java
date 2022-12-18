@@ -87,5 +87,13 @@ class BookServiceTest {
         PriceSummary result = service.calulateBooksPriceWithDiscount(books);
         assertEquals(187.5, result.getFinalPrice());
     }
+    
+    @Test
+	public void buyBooksShouldReturnActualPriceWithoutDiscountedForMultipleBooksOfSameType() {
+		List<BookRequest> books = new ArrayList<BookRequest>();
+		books.add(new BookRequest(1, 5));
+		PriceSummary result = service.calulateBooksPriceWithDiscount(books);
+		assertEquals(250.0, result.getFinalPrice());
+	}
 
 }

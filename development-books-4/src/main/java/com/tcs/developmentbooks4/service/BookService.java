@@ -22,6 +22,8 @@ public class BookService {
 	}
 
 	public PriceSummary calulateBooksPriceWithDiscount(List<BookRequest> books) {
+		if (books.size() == 1)
+			return createPriceSummaryForOnlyOneBookType(books.get(0));
 		int totalBooks = books.stream().mapToInt(book -> book.getQuantity()).sum();
 		int typesOfBook = books.size();
 		return createPriceSummary(totalBooks, calculateDiscountByNoOfTypesOfBooks(totalBooks, typesOfBook));
@@ -53,4 +55,13 @@ public class BookService {
 			discountedPrice = actualCost;
 		return discountedPrice;
 	}
+	
+    public PriceSummary createPriceSummaryForOnlyOneBookType(BookRequest booksInput) {
+        PriceSummary priceSummary = new PriceSummary();
+        priceSummary.setActualPrice(50 * booksInput.getQuantity());
+        priceSummary.setFinalPrice(50 * booksInput.getQuantity());
+        priceSummary.setTotalBooks(booksInput.getQuantity());
+        priceSummary.setTotalDiscount(0);
+        return priceSummary;
+    }
 }
