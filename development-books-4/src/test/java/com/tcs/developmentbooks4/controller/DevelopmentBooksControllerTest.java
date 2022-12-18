@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.tcs.developmentbooks4.model.BookRequest;
 import com.tcs.developmentbooks4.model.Books;
 import com.tcs.developmentbooks4.service.BookService;
 
@@ -30,6 +31,12 @@ class DevelopmentBooksControllerTest {
 	public void getAllBooksShouldReturnFiveBookNames() {
 		List<Books> books = controller.getAllBooks();
 		assertEquals(5, books.size());
+	}
+
+	@Test
+	public void buyBookShouldReturnSuccessMessage() {
+		String result = controller.buyBook(new BookRequest(1, 1));
+		assertEquals("Book bought..", result);
 	}
 
 }
