@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.tcs.developmentbooks4.enums.BooksEnum;
+import com.tcs.developmentbooks4.model.BookRequest;
 import com.tcs.developmentbooks4.model.Books;
 
 class BookServiceTest {
@@ -33,6 +34,12 @@ class BookServiceTest {
 		assertEquals(BooksEnum.CLEAN_CODE.getId(), result.get(0).getId());
 		assertEquals(BooksEnum.CLEAN_CODE.getPrice(), result.get(0).getPrice(), 0.0);
 		assertEquals(BooksEnum.CLEAN_CODE.getYear(), result.get(0).getYear());
+	}
+
+	@Test
+	public void buyBookShouldReturnSuccessMessage() {
+		String result = service.buyBook(new BookRequest(1, 1));
+		assertEquals("Book bought..", result);
 	}
 
 }
